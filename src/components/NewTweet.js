@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { handleAddTweet } from "../actions/tweets";
 
 class NewTweet extends Component {
   state = {
@@ -17,8 +19,9 @@ class NewTweet extends Component {
     e.preventDefault();
 
     const { text } = this.state;
+    const { dispatch, id } = this.props;
 
-    //TODO: Add Tweet to the store
+    dispatch(handleAddTweet(text, id));
 
     console.log("New tweet: ", text);
     this.setState(() => ({
@@ -32,7 +35,7 @@ class NewTweet extends Component {
     return (
       <div>
         <h3 className="center">Compose new Tweet</h3>
-        <form className="new-tweet" onSubmit="{this.handleSubmit}">
+        <form className="new-tweet" onSubmit={this.handleSubmit}>
           <textarea
             className="textarea"
             placeholder="What's happening?"
@@ -50,4 +53,4 @@ class NewTweet extends Component {
   }
 }
 
-export default NewTweet;
+export default connect()(NewTweet);
